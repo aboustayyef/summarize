@@ -6,14 +6,19 @@ class Document
 {
   public $text;
   public $sentences = [];
-  function __construct($instantiationMethod = "fromText", $argument= "The new Pepsi #MeshGhalat ad is being criticized for using the word Ataf to refer to women and I agree that the term is disrespectful but not specifically towards women. I’ve seen girls use that term as well and it’s more of a slang term that’s inappropriate to use when referring to anyone in general. So yes using the “ataf” term is wrong but I don’t think that’s the only problem with this ad. In fact, I still can’t understand what’s really happening between the guy and the girl. For all I know, it could be one of three scenarios and all of them don’t make sense: 1- The guy’s car overheats so the girl comes to the rescue and they decide to have a picnic together? 2- The girl is with the guy and the car overheats and he has the picnic kit ready so he gets to spend quality time with her in the wilderness? 3- The girl was having a picnic by herself and this guy comes out of nowhere because his car broke down? Moreover, who does a picnic in Faqra (looks like Faqra in the background) and who keeps a picnic set and a hiking backpack in his car all the time? Kello mich zabit :) To be fair, the two other ads are pretty cool and the whole #MeshGhalat campaign is fun. I used that hashtag a lot and it will easily go viral.") {
+  function __construct($instantiationMethod = "fromText", $argument= "this text already exists") {
     if ($instantiationMethod == "fromText") {
       $this->text = $argument;
-      $this->extractSentences();
-      $this->scoreSentences();
+    } else if ($instantiationMethod == "fromUrl"){
+      $doc = new Extractor($argument);
+      $this->text = $doc->getTitle() . ' . ' . $doc->getText();
     }
-    // To Do: Instantiation from URL
-    return false;
+
+    $this->text = html_entity_decode($this->text, ENT_NOQUOTES);
+
+    $this->extractSentences();
+
+    $this->scoreSentences(); 
   }
 
   public function extractSentences(){
@@ -21,7 +26,7 @@ class Document
       // Returns a collection of Keyphrases;
 
       // split by punctuation delimiters into sentences
-      $pattern =  '/(?<=[.?!;])\s+(?=\p{Lu})/';
+      $pattern =  '/(?<=[.?!;])\s+/';
       $sentences = preg_split( $pattern, $this->text );
       foreach ($sentences as $key => $sentence) {
         array_push($this->sentences, ['sentence' => $sentence, 'order' => $key, 'score' => 0]);
@@ -70,14 +75,37 @@ class Document
     return $jaccard;
   }
 
-  public function top_scoring_sentences($howmany = 5 ){
+  public function top_scoring_sentences($howmany = 5, $sorted = true){
     $scored = [];
     foreach ($this->sentences as $key => $sentence) {
       $scored[$sentence['sentence']] = $sentence['score'];
     }
     asort($scored);
     $scored = array_reverse($scored);
-    return array_slice($scored, 0, $howmany);
+
+    // we no how the top scoring phrases in order of strength;
+    $topscoring = array_slice($scored, 0, $howmany);
+
+
+    // now we order them in order of appearance;
+    $inorder = [];
+    foreach ($topscoring as $phrase => $score) {
+      foreach ($this->sentences as $key => $sentence) {
+        if ($phrase == $sentence['sentence']) {
+          $inorder[$phrase] = $sentence['order'];
+          continue;
+        }
+      }
+    }
+
+    asort($inorder);
+    $topscoringSorted = $inorder;
+
+    if ($sorted) {
+      return $topscoringSorted;
+    } else {
+      return $topscoring;
+    }
 
   }
 
