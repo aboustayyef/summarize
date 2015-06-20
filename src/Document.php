@@ -11,7 +11,7 @@ class Document
       $this->text = $argument;
     } else if ($instantiationMethod == "fromUrl"){
       $doc = new Extractor($argument);
-      $this->text = $doc->getTitle() . ' . ' . $doc->getText();
+      $this->text = $doc->getText();
     }
 
     $this->text = html_entity_decode($this->text, ENT_NOQUOTES);
@@ -26,7 +26,7 @@ class Document
       // Returns a collection of Keyphrases;
 
       // split by punctuation delimiters into sentences
-      $pattern =  '/(?<=[.?!;])\s+/';
+      $pattern =  '/(?<=[.?!;])\s*/';
       $sentences = preg_split( $pattern, $this->text );
       foreach ($sentences as $key => $sentence) {
         array_push($this->sentences, ['sentence' => $sentence, 'order' => $key, 'score' => 0]);
@@ -53,7 +53,7 @@ class Document
     $result = [];
     foreach ($raw as $key => $word) {
       if (strlen(trim($word)) > 0) {
-        $result[] = $word;
+        $result[] = \Porter::stem($word);
       }
     }
     return $result;

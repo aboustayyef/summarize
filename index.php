@@ -2,12 +2,10 @@
 
 require_once('vendor/autoload.php');
 
-$document = new Aboustayyef\Document("fromUrl", "http://stateofmind13.com/2015/06/11/lebanese-policeman-physically-assaults-a-woman-for-stopping-at-a-red-light-ends-up-innocent-anyway/");
-
-var_dump($document->text);
+$document = new Aboustayyef\Document("fromUrl", "http://www.bbc.com/news/world-us-canada-33211192");
 
 $sentences = $document->sentences;
-var_dump($sentences);
+
 $document->top_scoring_sentences(5);
 
 echo "Sorted in order of appearance: \n";

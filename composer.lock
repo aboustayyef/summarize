@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fb2d06b295949bfb4d76694b3e2ad2e9",
+    "hash": "0a96a4d4843c986af915d357dab309c8",
     "packages": [
         {
             "name": "aboustayyef/extractor",
@@ -16,7 +16,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aboustayyef/extractor/zipball/ac5af325a7f5a319a99d28264afd4f9f9d97a979",
+                "url": "https://api.github.com/repos/aboustayyef/extractor/zipball/ba00cada55861c3a30db7a8e3059ea5ef04967df",
                 "reference": "ac5af325a7f5a319a99d28264afd4f9f9d97a979",
                 "shasum": ""
             },
@@ -47,6 +47,36 @@
                 "scraping"
             ],
             "time": "2015-06-14 10:06:54"
+        },
+        {
+            "name": "camspiers/porter-stemmer",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/camspiers/porter-stemmer.git",
+                "reference": "588088e9aaa6d81d711098cf60af2ef18b1a5798"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/camspiers/porter-stemmer/zipball/588088e9aaa6d81d711098cf60af2ef18b1a5798",
+                "reference": "588088e9aaa6d81d711098cf60af2ef18b1a5798",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Richard Heyes",
+                    "email": "support@rgraph.net"
+                }
+            ],
+            "description": "Porter Stemmer created by Richard Heyes",
+            "time": "2013-02-06 21:39:08"
         },
         {
             "name": "fivefilters/php-readability",

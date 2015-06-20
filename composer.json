@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "aboustayyef/extractor": "dev-master"
+        "aboustayyef/extractor": "dev-master",
+        "camspiers/porter-stemmer": "^1.0"
     },
     "require-dev": {
         "phpspec/phpspec": "2.2.*"
